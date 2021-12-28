@@ -13,7 +13,7 @@ The Slater Lab RNAseq tool is used for processing raw RNAseq data right from the
     * [GENOME_DIR](#genome_dir)
 3. [Output To Expect From The Tool](#output-to-expect-from-the-tool)
 4. [How To Run The Tool](#how-to-run-the-tool)
-5. Additional Tips
+5. [Advanced Tips](#advanced-tips)
 
 <br/>
 
