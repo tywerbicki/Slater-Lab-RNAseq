@@ -66,7 +66,46 @@ Similar to COMPUTE_HOME, `SLURM_HOME` should specify the location to an **existi
 
 ## Output To Expect From The Tool
 
-The tool will output **a single directory** whose location and name is specified by `DEPOSIT_DIR`.
+The tool will output **a single directory** whose location and name is specified by `DEPOSIT_DIR`:
+
+```
+DEPOSIT_DIR
+│   read_data_agg 
+│
+└───fastqs
+│   │   <sample_1_name>_R1.fastq.gz
+│   │   <sample_1_name>_R2.fastq.gz
+|   |   <sample_2_name>_R1.fastq.gz
+|   |   <sample_2_name>_R2.fastq.gz
+|   |                 .
+|   |                 .
+│   │
+│   └───quality_assessment
+│           <sample_1_name>_R1.fastqc.html
+│           <sample_1_name>_R1.fastqc.zip
+│           <sample_1_name>_R2.fastqc.html
+│           <sample_1_name>_R2.fastqc.zip
+│                         . 
+│                         .
+│   
+└───<sample_1_name>
+|       ReadsPerGene.out.tab
+|                . 
+|                .
+│   
+└───<sample_2_name>
+|       ReadsPerGene.out.tab
+|                . 
+| 
+| 
+.
+.
+
+└───<sample_n_name>
+        ReadsPerGene.out.tab
+                 . 
+                 .   
+```
 
 ---
 
