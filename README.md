@@ -1,4 +1,4 @@
-# Welcome to the official documentation of the Slater Lab RNAseq tool.
+# Welcome To The Official Documentation For The Slater Lab RNAseq Tool.
 
 The Slater Lab RNAseq tool is used for processing raw RNAseq data right from the sequencing machine. Its purpose is to automate many of the preprocessing steps required by an RNAseq workflow, as well as exploit their embarrassingly parallel nature to drastically decrease their cumulative execution time. Below you will find the resources necessary to become acquainted with the tool and incorporate it into your future workflows:
 
@@ -79,12 +79,24 @@ Below are step-by-step instructions on how to safely and effectively run the too
 2. Copy *RNAseq.slurm* from the shared lab space into your SLURM_HOME:
 > `cp /work/slater_lab/shared_slurm_scripts/RNAseq.slurm .`
 3. Open *RNAseq.slurm* and change the 7 user-defined parameters to your desired values.
-> `nano RNAseq.slurm`
+> `nano RNAseq.slurm` <br/>
+> `Ctrl + o > Enter` to save. <br/>
+> `Ctrl + x` to exit.
 4. Submit *RNAseq.slurm* for batch processing.
 > `sbatch RNAseq.slurm`
 
 ---
 
-## Additional Tips
+## Advanced Tips
+
+* If you are performing a large-scale analysis (1TB+ compressed sequencing data), it is unlikely that setting `DEPOSIT_DIR` to a location in the lab's shared workspace will provide a desirable result. This is because the tool will likely run out of storage space during the data decompression step. As such, `DEPOSIT_DIR` should be set to a location in your `/scratch` directory, which provides up to 30TB of temporary storage ([see ARC storage guidelines][1]). This can be achieved by specifying:
+    
+    > `DEPOSIT_DIR=/scratch/${SLURM_JOB_ID}/<name_of_DEPOSIT_DIR>` 
+    
+    This directory will remain intact for 5 days following job completion, so you must move it back into the lab's shared workspace within that time period:
+    
+    > `mv /scratch/${SLURM_JOB_ID}/<name_of_DEPOSIT_DIR> /work/slater_lab/data`
 
 ---
+
+[1]: https://rcs.ucalgary.ca/ARC_Cluster_Guide#ARC_Cluster_Storage
