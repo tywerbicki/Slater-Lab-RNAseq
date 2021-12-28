@@ -96,7 +96,7 @@ DEPOSIT_DIR
 └───<sample_2_name>
 |       ReadsPerGene.out.tab
 |                . 
-| 
+|                . 
 | 
 .
 .
