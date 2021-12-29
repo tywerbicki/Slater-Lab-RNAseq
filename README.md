@@ -12,6 +12,7 @@ The Slater Lab RNAseq tool is used for processing raw RNAseq data right from the
     * [N_LANES](#n_lanes)
     * [GENOME_DIR](#genome_dir)
 3. [Output To Expect From The Tool](#output-to-expect-from-the-tool)
+    * [read_data_agg](#read_data_agg)
 4. [How To Run The Tool](#how-to-run-the-tool)
 5. [Advanced Tips](#advanced-tips)
 
@@ -141,28 +142,28 @@ Read *read_data_agg* in Python:
 ```python
 import pyarrow.feather as feather
 
-reads_data = (
+read_data = (
     feather.read_feather(source = "/<path/to>/read_data_agg")
     .set_index("ID")
 )
 
-reads_data.head(10)
+read_data.head(10)
 ```
 
 Read *read_data_agg* in R:
 ```r
 library(arrow)
 
-reads_data = read_feather(
+read_data = read_feather(
   file = "/<path/to>/read_data_agg",
   as_data_frame = TRUE
 )
-reads_data = data.frame(
-  reads_data[, 2:ncol(reads_data) ],
-  row.names = reads_data$ID
+read_data = data.frame(
+  read_data[, 2:ncol(read_data) ],
+  row.names = read_data$ID
 )
 
-head(reads_data, 10)
+head(read_data, 10)
 ```
 
 ### fastqs
