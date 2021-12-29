@@ -188,11 +188,11 @@ Below are step-by-step instructions on how to safely and effectively run the too
 > `cd </path/to/SLURM_HOME>`
 2. Copy *RNAseq.slurm* from the shared lab space into your SLURM_HOME:
 > `cp /work/slater_lab/shared_slurm_scripts/RNAseq.slurm .`
-3. Open *RNAseq.slurm* and change the 7 user-defined parameters to your desired values.
+3. Open *RNAseq.slurm* and change the 7 user-defined parameters to your desired values:
 > `nano RNAseq.slurm` <br/>
 > `Ctrl + o > Enter` to save. <br/>
 > `Ctrl + x` to exit.
-4. Submit *RNAseq.slurm* for batch processing.
+4. Submit *RNAseq.slurm* for batch processing:
 > `sbatch RNAseq.slurm`
 
 ---
