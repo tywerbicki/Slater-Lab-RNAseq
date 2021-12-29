@@ -38,29 +38,55 @@ There are **_7_** user-defined parameters in *RNAseq.slurm* to specify:
 
 `COMPUTE_HOME` should specify the location to an **existing directory** wherein the tool will launch *python* scripts from. The tool will not leave any files in this directory, it is purely a location where certain processes will take place.
 
+*Requirements:*
+* Must specify an existing directory.
+* Must be an absolute path.
+
 #### SLURM_HOME
 
 Similar to COMPUTE_HOME, `SLURM_HOME` should specify the location to an **existing directory** wherein the tool will launch *slurm* scripts from. The tool will not leave any files in this directory, it is purely a location where certain processes will take place. It can be set to the same directory as COMPUTE_HOME if desired.
 
+*Requirements:*
+* Must specify an existing directory.
+* Must be an absolute path.
+
 #### TARGET_DIR
 
-`TARGET_DIR` should specify the location of the directory containing the raw sequencing data for each sample. **This must be an absolute path**.
+`TARGET_DIR` should specify the location of the directory containing the raw sequencing data for each sample. 
+
+*Requirements:*
+* Must specify an existing directory.
+* Must be an absolute path.
 
 #### DEPOSIT_DIR
 
-`DEPOSIT_DIR` should specify the location of a directory that the tool will create and use to store all output. **This cannot be an existing directory**. **This must be an absolute path**.
+`DEPOSIT_DIR` should specify the location of a directory that the tool will create and use to store all output. 
+
+*Requirements:*
+* Must specify a directory that **does not** yet exist.
+* Must be an absolute path.
 
 #### N_SAMPLES
 
 `N_SAMPLES` should specify the number of samples that the tool should expect to process.
 
+*Requirements:*
+* Must specify a positive integer.
+
 #### N_LANES
 
 `N_LANES` should specify the number of lanes used when the sequencing experiment was performed.
 
+*Requirements:*
+* Must specify a positive integer.
+
 #### GENOME_DIR
 
 `GENOME_DIR` should specify the location of a directory that contains the genome to be used for STAR alignment. The default value for this parameter is specifying the location to a human genome, therefore, if your experiment consists of human RNA, this parameter can be left unchanged. **This must be an absolute path**.
+
+*Requirements:*
+* Must specify an existing directory.
+* Must be an absolute path.
 
 ---
 
@@ -107,6 +133,50 @@ DEPOSIT_DIR
                  .   
 ```
 
+### read_data_agg
+
+*read_data_agg* is a feather file ([see Feather File Format][1]) containing the aggregated reads data, which is comprised of the total reads per gene data for each sample. This data is what you will input into downstream analysis pipelines such as a differential gene expression analysis in DESeq2.
+
+Read *read_data_agg* in Python:
+```python
+import pyarrow.feather as feather
+
+reads_data = (
+    feather.read_feather(source = "/<path/to>/read_data_agg")
+    .set_index("ID")
+)
+
+reads_data.head(10)
+```
+
+Read *read_data_agg* in R:
+```r
+library(arrow)
+
+reads_data = read_feather(
+  file = "/<path/to>/read_data_agg",
+  as_data_frame = TRUE
+)
+reads_data = data.frame(
+  reads_data[, 2:ncol(reads_data) ],
+  row.names = reads_data$ID
+)
+
+head(reads_data, 10)
+```
+
+### fastqs
+
+*fastqs* is a directory containing compressed, concatenated raw sequencing data for each of 2 runs for every sample. This directory also houses the *quality_assessment* directory. 
+
+### quality_assessment
+
+*quality_assessment* is a directory containing the results of a fastqc quality control check for each of 2 runs for every sample. These results should be viewed after running the tool to ensure that RNA quality was sufficient ([see FastQC documentation][2]).
+
+### <sample_1_name> ... <sample_n_name> 
+
+Each of these directories contains the output of a STAR alignment performed on data from the sample specified as the name of the directory ([see STAR documentation][3]). 
+
 ---
 
 ## How To Run The Tool
@@ -128,7 +198,7 @@ Below are step-by-step instructions on how to safely and effectively run the too
 
 ## Advanced Tips
 
-* If you are performing a large-scale analysis (1TB+ compressed sequencing data), it is unlikely that setting `DEPOSIT_DIR` to a location in the lab's shared workspace will provide a desirable result. This is because the tool will likely run out of storage space during the data decompression step. As such, `DEPOSIT_DIR` should be set to a location in your `/scratch` directory, which provides up to 30TB of temporary storage ([see ARC storage guidelines][1]). This can be achieved by specifying:
+* If you are performing a large-scale analysis (1TB+ compressed sequencing data), it is unlikely that setting `DEPOSIT_DIR` to a location in the lab's shared workspace will provide a desirable result. This is because the tool will likely run out of storage space during the data decompression step. As such, `DEPOSIT_DIR` should be set to a location in your `/scratch` directory, which provides up to 30TB of temporary storage ([see ARC storage guidelines][4]). This can be achieved by specifying:
     
     > `DEPOSIT_DIR=/scratch/${SLURM_JOB_ID}/<name_of_DEPOSIT_DIR>` 
     
@@ -138,4 +208,7 @@ Below are step-by-step instructions on how to safely and effectively run the too
 
 ---
 
-[1]: https://rcs.ucalgary.ca/ARC_Cluster_Guide#ARC_Cluster_Storage
+[1]: https://arrow.apache.org/docs/python/feather.html
+[2]: https://www.bioinformatics.babraham.ac.uk/projects/fastqc/
+[3]: https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf
+[4]: https://rcs.ucalgary.ca/ARC_Cluster_Guide#ARC_Cluster_Storage
