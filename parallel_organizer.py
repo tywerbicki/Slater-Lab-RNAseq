@@ -134,33 +134,3 @@ for i in range(N_JOBS):
 
 for i in range(N_JOBS):
     processes[i].join()
-
-
-
-
-
-#%%
-#if __name__ == "__main__":
-#
-#    import os
-#    sample_dir = "/home/werby/RNAseq/test/11_A"
-#    os.chdir(sample_dir)
-#
-#    n_lanes = 2
-#
-#    read_tags = []
-#    for i in range(1, 3):
-#        for j in range(1, n_lanes + 1):
-#            read_tags.append( f"L00{j}_R{i}" )
-#
-#    ordered_names = [None] * len(read_tags)
-#    for fastq in os.listdir():
-#        for i, read_tag in enumerate(read_tags):
-#            if read_tag in fastq:
-#                ordered_names[i] = fastq
-#                break
-#
-#    if None in ordered_names:
-#        raise AttributeError(f"Couldn't locate .fastq.gz with read tag {read_tags[ ordered_names.index(None) ]} in sample {sample_dir}.")
-#
-#    ordered_names
