@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --mem=50000
-#SBATCH --time=0-2:00:00
+#SBATCH --time=0-6:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=16    
 #SBATCH --output=/work/slater_lab/shared_slurm_outs/RNAseq/qc_STAR_align-%j.out                                                                                                                                                                            
