@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --mem=10000
-#SBATCH --time=0-24:00:00
+#SBATCH --time=2-0:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=4     
 #SBATCH --output=/work/slater_lab/shared_slurm_outs/RNAseq/reads_aggregator-%j.out                                                                                                                                                                          
