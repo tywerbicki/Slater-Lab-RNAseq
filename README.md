@@ -27,7 +27,7 @@ This documentation and all source code comprising the tool are authored by *Ty W
 The following is a list of necessary requirements that must be satisfied for you to be able to utilize the tool effectively:
 
 1. A member of the *slater_lab* group on ARC. This will grant you permission to access the lab's shared workspace. This can be queried using the command: <br/>
-> `groups <user>`
+> `groups $USER | grep -w "slater_lab"`
 
 ---
 
