@@ -12,22 +12,22 @@ echo "Job started: "$(date)
 # variables that are defined previously in RNAseq.slurm.
 
 # Source required python script.
-cd $COMPUTE_HOME
+cd "$COMPUTE_HOME"
 cp /work/slater_lab/shared_compute_scripts/reads_aggregator.py .
 # Enter virtual environment.
 source /work/slater_lab/anaconda3/bin/activate ml
 
 # Execute python script.
-python reads_aggregator.py $DEPOSIT_DIR $N_SAMPLES
+python reads_aggregator.py "$DEPOSIT_DIR" "$N_SAMPLES"
 
 # Perform cleanup.
 conda deactivate
 rm reads_aggregator.py
-rm $DEPOSIT_DIR/fastqs/*.fastq
+rm ${DEPOSIT_DIR}/fastqs/*.fastq
 
 # Set appropriate permissions for all contents in the deposit dir.
-chgrp -R slater_lab $DEPOSIT_DIR
-find $DEPOSIT_DIR -type d | xargs chmod 2770
-find $DEPOSIT_DIR -type f | xargs chmod 660
+chgrp -R slater_lab "$DEPOSIT_DIR"
+find "$DEPOSIT_DIR" -type d | xargs chmod 2770
+find "$DEPOSIT_DIR" -type f | xargs chmod 660
 
 echo "Job complete: "$(date)
